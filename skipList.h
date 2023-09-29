@@ -1,6 +1,9 @@
 #ifndef LISTA_H
 	#define LISTA_H
-
+/*
+Criei uma base baseada no meu TAD de lista encadeada ordenada, 
+mas provavelmente vai precisar de muitas mudanças para se adaptar a skipList.
+*/
 	#include "word.h"
 	#include <stdbool.h>
 

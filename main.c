@@ -2,7 +2,17 @@
 #include <string.h>
 #include "word.h"
 #include "skipList.h"
+/*
+Issues da main:
+Na impressao, falta o filtro para printar só as palavras que começam com letra específica,
+creio que a implementação disso vai depender muito da implementação da lista,
+talvez exija modificações no lista.h para comportar essa função.
 
+O scanf("%s") é ruim para pegar termos com espaços, 
+estou usando verbetes sem espaços nos meus testes,
+mas deveremos decidir como tratar isso, podemos usar uma função tipo gets ou criar nossa própria,
+ou pegar uma das dezenas que fizemos no lab de ICC1.
+*/
 void Insert(LISTA* lista){
   char title[40];
   char verbete[140];
