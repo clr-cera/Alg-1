@@ -15,6 +15,7 @@
 	WORD *word_criar(char* title, char* verbete);
 	bool word_apagar(WORD **word);
 	void word_imprimir(WORD *word);
+	void word_imprimir_verbete(WORD *word);
 	char* word_get_title(WORD *word);
 	char* word_get_verbete(WORD *word);
 	bool word_set_title(WORD *word, char* title);

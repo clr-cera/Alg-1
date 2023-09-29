@@ -19,7 +19,11 @@ void word_imprimir(WORD *word)
 	if(word != NULL)
 		printf("%s %s\n", word_get_title(word), word_get_verbete(word));
 }
-
+void word_imprimir_verbete(WORD *word)
+{
+	if(word != NULL)
+		printf("%s\n", word_get_verbete(word));
+}
 char* word_get_title(WORD *word)
 {
 	if(word != NULL)
