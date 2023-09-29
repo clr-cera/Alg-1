@@ -33,7 +33,7 @@ void Search(LISTA* lista){
   char title[40];
   scanf(" %s", title);
 
-  WORD* word = lista_busca(lista, title)
+  WORD* word = lista_busca(lista, title);
   word_imprimir_verbete(word);
 }
 void Print(LISTA* lista){
