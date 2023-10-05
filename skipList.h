@@ -6,6 +6,8 @@ mas provavelmente vai precisar de muitas mudanças para se adaptar a skipList.
 */
 	#include "word.h"
 	#include <stdbool.h>
+  #include <stdlib.h>
+  #include <stdio.h>
 
 	typedef struct lista_ LISTA;
 

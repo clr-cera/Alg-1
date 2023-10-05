@@ -11,6 +11,7 @@
 
 	
 	typedef struct word_ WORD;
+  typedef WORD* Word;
 
 	WORD *word_criar(char* title, char* verbete);
 	bool word_apagar(WORD **word);
@@ -22,4 +23,3 @@
 	bool word_set_verbete(WORD *word, char* verbete);
 
 #endif 
-	
