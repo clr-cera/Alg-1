@@ -51,7 +51,9 @@ void Search(LISTA* lista){
 }
 
 void Print(LISTA* lista){
-  lista_imprimir(lista);
+  char c;
+  scanf(" %c", &c);
+  lista_imprimir_de_caracter(lista, c);
 }
 
 

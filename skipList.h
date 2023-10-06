@@ -21,6 +21,6 @@ mas provavelmente vai precisar de muitas mudanças para se adaptar a skipList.
 	bool lista_vazia(LISTA *lista);
 	bool lista_cheia(LISTA *lista);
 	void lista_imprimir(LISTA *lista);
-
+	void lista_imprimir_de_caracter(LISTA *lista, char c);
 	  
 #endif
