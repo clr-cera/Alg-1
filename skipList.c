@@ -46,3 +46,29 @@ SkipList lista_criar(int depth){
   return result;
 }
 
+int lista_tamanho(SkipList lista){
+  return lista->length;
+}
+
+bool lista_vazia(SkipList lista){
+  if(lista->vector[0]->next == NULL) return true;
+  else return false;
+}
+
+bool lista_cheia(SkipList lista){
+  Cell test = createCell(NULL);
+  bool returnal;
+  
+  if (test == NULL) returnal = true;
+  else returnal = false;
+
+  free(test);
+  return returnal;
+}
+
+void lista_imprimir(SkipList lista){
+  Cell iterCell = lista->vector[0]->next;
+  for(; iterCell!=NULL; iterCell = iterCell->next)
+    printf("Palavra: %s Verbete: %s\n", word_get_title(iterCell->value), word_get_verbete(iterCell->value));
+}
+
