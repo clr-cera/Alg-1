@@ -11,6 +11,7 @@
 
 	
 	typedef struct word_ WORD;
+  typedef WORD* Word;
 
 	WORD *word_criar(char* title, char* verbete);
 	bool word_apagar(WORD **word);
@@ -23,4 +24,3 @@
 	int word_compare(WORD *word1, WORD *word2);
 
 #endif 
-	
