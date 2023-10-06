@@ -9,6 +9,7 @@ typedef struct cell_{
 }cellObj;
 typedef cellObj* Cell;
 
+
 // The SkipList has a vector with all heads of linked lists, the depth of the linked list and the length of the bottom linked list
 typedef struct skipList_{
   Cell* vector;
@@ -16,6 +17,7 @@ typedef struct skipList_{
   int length;
 }skipListObj;
 typedef skipListObj* SkipList;
+
 
 // This funcion takes a word and returns a cell with this word
 Cell createCell(Word input){
@@ -46,15 +48,18 @@ SkipList lista_criar(int depth){
   return result;
 }
 
+// This functions return listas length property
 int lista_tamanho(SkipList lista){
   return lista->length;
 }
 
+// This function sees if there is any cell in the bottom linked list
 bool lista_vazia(SkipList lista){
   if(lista->vector[0]->next == NULL) return true;
   else return false;
 }
 
+// This function tries to create a new cell, if it is impossible, then there is no ram memory
 bool lista_cheia(SkipList lista){
   Cell test = createCell(NULL);
   bool returnal;
@@ -66,9 +71,31 @@ bool lista_cheia(SkipList lista){
   return returnal;
 }
 
+// This function prints all elements from bottom linked list
 void lista_imprimir(SkipList lista){
   Cell iterCell = lista->vector[0]->next;
   for(; iterCell!=NULL; iterCell = iterCell->next)
     printf("Palavra: %s Verbete: %s\n", word_get_title(iterCell->value), word_get_verbete(iterCell->value));
+}
+
+// This function frees a linked list
+void linkedListApagar(Cell head){
+  Cell lastCell = head;
+  Cell currentCell = head;
+
+  while(currentCell != NULL){
+    lastCell = currentCell;
+    currentCell = currentCell->next ;
+    free(lastCell);
+  }
+}
+
+// This function frees a Skip List
+void lista_apagar(SkipList* lista){
+  for(int i = 0; i < (*lista)->length; i++)
+    linkedListApagar((*lista)->vector[i]);
+  
+  free(*lista);
+  *lista = NULL;
 }
 
