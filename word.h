@@ -20,6 +20,7 @@
 	char* word_get_verbete(WORD *word);
 	bool word_set_title(WORD *word, char* title);
 	bool word_set_verbete(WORD *word, char* verbete);
+	int word_compare(WORD *word1, WORD *word2);
 
 #endif 
 	

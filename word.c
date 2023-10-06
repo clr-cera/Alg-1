@@ -63,3 +63,8 @@ bool word_set_verbete(WORD* word, char* verbete)
 	}
 	return false;
 }
+int word_compare(WORD *word1, WORD *word2){
+	if(word1 == NULL || word2 == NULL)
+		return -32000;
+	return strcmp(word_get_title(word1), word_get_title(word2));
+}
