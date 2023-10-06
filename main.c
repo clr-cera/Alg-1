@@ -22,6 +22,7 @@ void Insert(LISTA* lista){
   WORD* word = word_criar(title, verbete);
   lista_inserir(lista, word);
 }
+
 void Alter(LISTA* lista){
   char title[40];
   char verbete[140];
@@ -32,6 +33,7 @@ void Alter(LISTA* lista){
   word_set_verbete(word, verbete);
   lista_inserir(lista, word);
 }
+
 void Remove(LISTA* lista){
   char title[40];
   scanf(" %s", title);
@@ -39,6 +41,7 @@ void Remove(LISTA* lista){
   WORD* word = lista_remover(lista, title);
   word_apagar(&word);
 }
+
 void Search(LISTA* lista){
   char title[40];
   scanf(" %s", title);
@@ -46,6 +49,7 @@ void Search(LISTA* lista){
   WORD* word = lista_busca(lista, title);
   word_imprimir_verbete(word);
 }
+
 void Print(LISTA* lista){
   lista_imprimir(lista);
 }
