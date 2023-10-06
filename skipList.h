@@ -9,9 +9,11 @@ mas provavelmente vai precisar de muitas mudanças para se adaptar a skipList.
   #include <stdlib.h>
   #include <stdio.h>
 
-	typedef struct lista_ LISTA;
+  typedef struct cell_* Cell;
+  typedef struct skipList_* SkipList;
+  typedef struct skipList_ LISTA ;
 
-	LISTA *lista_criar(void);
+	LISTA *lista_criar(int depth);
 	bool lista_inserir(LISTA *lista, WORD *word);
 	WORD *lista_remover(LISTA *lista, char* title);
 	void lista_apagar(LISTA **lista);
