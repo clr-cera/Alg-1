@@ -54,7 +54,7 @@ SkipList lista_criar(int depth){
 }
 
 // Essa função recebe um vetor de células e insere uma nova palavra à frente delas
-  void insertInCells(Word word, Cell* vector, int depth){
+void insertInCells(Word word, Cell* vector, int depth){
   Cell inputCell = createCell(word);
 
   inputCell->next = vector[0]->next;
@@ -120,7 +120,83 @@ bool lista_inserir(LISTA *lista, WORD *word){
   lista->length+=1;
   return true;
 }
- 
+
+// Essa função recebe um vetor de células e remove a célula posterior caso exista
+void removeInCells(Cell* vector, int depth, Word word){
+  for(int i = 0; i < depth; i++){
+    if(vector[i]->next != NULL)
+      if(word_compare(vector[i]->next->value, word) == 0){
+        Cell removedCell = vector[i]->next;
+        vector[i]->next = removedCell->next;
+        
+        if(i != 0){
+          word_apagar(&(removedCell->value));
+          free(removedCell);
+        }
+      }
+  }
+}
+
+// Essa função remove uma palavra da skip list
+Word lista_remover(LISTA *lista, char* title){
+  Word word = word_criar(title, NULL);
+
+  if (lista == NULL || word == NULL) return false;
+  if(lista_cheia(lista)) return false;
+  
+  
+  Cell currentCell = lista->vector[lista->depth-1];
+  Cell nextCell = NULL;
+
+  Cell vector[lista->depth];
+  int vectorIndex = lista->depth-1;
+  
+  while(1){
+    nextCell = currentCell->next;
+    
+    if (nextCell == NULL && currentCell->below == NULL) {
+      vector[vectorIndex] = currentCell;
+      vectorIndex--;
+      break;
+    }
+    
+    else if (nextCell == NULL) {
+      vector[vectorIndex] = currentCell;
+      currentCell = currentCell->below;
+      vectorIndex--;
+      continue;
+    }
+    
+    else if(word_compare(nextCell->value, word) > 0){
+      if(vectorIndex == 0){
+        vector[vectorIndex] = currentCell;
+        vectorIndex--;
+        break;
+      }
+
+      vector[vectorIndex] = currentCell;
+      currentCell = currentCell->below;
+      vectorIndex--;
+      continue;
+    }
+    currentCell = currentCell->next;
+  }
+
+  Cell returnalCell = currentCell->next;
+  if(returnalCell == NULL) {
+    word_apagar(&word);
+    return NULL;
+  }
+  if(word_compare(returnalCell->value, word) != 0) {
+    word_apagar(&word);
+    return NULL;
+  }
+  
+  removeInCells(vector, lista->depth, word);
+  word_apagar(&word);
+
+  return returnalCell->value;
+}
 
 // Essa função retorna a propriedade length da lista
 int lista_tamanho(SkipList lista){
@@ -189,6 +265,14 @@ int main(void){
 
     lista_inserir(lista, word);
     
+    lista_imprimir(lista);
+  }
+  
+  for(int i = 0; i < n; i++){
+    char title[40];
+    scanf(" %s", title);
+
+    lista_remover(lista, title);
     lista_imprimir(lista);
   }
 
