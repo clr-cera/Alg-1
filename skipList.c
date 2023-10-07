@@ -24,6 +24,8 @@ Cell createCell(Word input){
   Cell result = (Cell) malloc(sizeof(cellObj));
   
   result->value = input;
+  result->next = NULL;
+  result->below = NULL;
   
   return result;
 }
@@ -45,8 +47,80 @@ SkipList lista_criar(int depth){
     else result->vector[i]->below = NULL;
   }
 
+  // Set Random Seed
+  srand(time(0));
+
   return result;
 }
+
+// Essa função recebe um vetor de células e insere uma nova palavra à frente delas
+  void insertInCells(Word word, Cell* vector, int depth){
+  Cell inputCell = createCell(word);
+
+  inputCell->next = vector[0]->next;
+  vector[0]->next = inputCell;
+
+  for(int i = 1; i < depth; i++){
+    if(rand() % 2 == 0) break;
+
+    Cell inputCell = createCell(word);
+
+    inputCell->next = vector[i]->next;
+    vector[i]->next = inputCell;
+
+    inputCell->below = vector[i-1]->next;
+  }
+}
+
+// Essa funçaõ recebe uma palavra e a insere na skip list
+bool lista_inserir(LISTA *lista, WORD *word){
+  if (lista == NULL || word == NULL) return false;
+  if(lista_cheia(lista)) return false;
+  
+  
+  Cell currentCell = lista->vector[lista->depth-1];
+  Cell nextCell = NULL;
+
+  Cell vector[lista->depth];
+  int vectorIndex = lista->depth-1;
+  
+  while(1){
+    nextCell = currentCell->next;
+    
+    if (nextCell == NULL && currentCell->below == NULL) {
+      vector[vectorIndex] = currentCell;
+      vectorIndex--;
+      break;
+    }
+    
+    else if (nextCell == NULL) {
+      vector[vectorIndex] = currentCell;
+      currentCell = currentCell->below;
+      vectorIndex--;
+      continue;
+    }
+    
+    else if(word_compare(nextCell->value, word) > 0){
+      if(vectorIndex == 0){
+        vector[vectorIndex] = currentCell;
+        vectorIndex--;
+        break;
+      }
+
+      vector[vectorIndex] = currentCell;
+      currentCell = currentCell->below;
+      vectorIndex--;
+      continue;
+    }
+    currentCell = currentCell->next;
+  }
+
+  
+  insertInCells(word, vector, lista->depth);
+  lista->length+=1;
+  return true;
+}
+ 
 
 // Essa função retorna a propriedade length da lista
 int lista_tamanho(SkipList lista){
@@ -84,16 +158,40 @@ void linkedListApagar(Cell head){
   while(currentCell != NULL){
     lastCell = currentCell;
     currentCell = currentCell->next ;
+    word_apagar(&(lastCell->value));
     free(lastCell);
   }
 }
 
 // Essa função apaga uma Skip List
 void lista_apagar(SkipList* lista){
-  for(int i = 0; i < (*lista)->length; i++)
+  for(int i = 0; i < (*lista)->depth; i++)
     linkedListApagar((*lista)->vector[i]);
-  
+ 
+  free((*lista)->vector);
   free(*lista);
   *lista = NULL;
 }
 
+
+int main(void){
+  int depth, n;
+  scanf("%d %d", &depth, &n);
+  SkipList lista = lista_criar(depth);
+  
+  for(int i = 0; i < n; i++){
+    char title[40];
+    char verbete[140];
+    scanf(" %s", title);
+    scanf(" %s", verbete);
+    
+    Word word = word_criar(title, verbete);
+
+    lista_inserir(lista, word);
+    
+    lista_imprimir(lista);
+  }
+
+  lista_apagar(&lista);
+  return 0;
+}

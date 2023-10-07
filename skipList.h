@@ -6,6 +6,8 @@ mas provavelmente vai precisar de muitas mudanças para se adaptar a skipList.
 */
 	#include "word.h"
 	#include <stdbool.h>
+  #include <stdlib.h>
+  #include <time.h>
 
   typedef struct cell_* Cell;
   typedef struct skipList_* SkipList;
