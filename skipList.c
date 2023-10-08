@@ -19,6 +19,7 @@ typedef struct skipList_{
 typedef skipListObj* SkipList;
 
 
+
 // Essa funcão recebe uma palavra e retorna uma célula contendo essa palavra
 Cell createCell(Word input){
   Cell result = (Cell) malloc(sizeof(cellObj));
@@ -29,6 +30,7 @@ Cell createCell(Word input){
   
   return result;
 }
+
 
 // Essa função recebe uma profudidade e retorna uma skip list com essa profundidade
 SkipList lista_criar(int depth){
@@ -53,6 +55,7 @@ SkipList lista_criar(int depth){
   return result;
 }
 
+
 // Essa função recebe um vetor de células e insere uma nova palavra à frente delas
 void insertInCells(Word word, Cell* vector, int depth){
   Cell inputCell = createCell(word);
@@ -71,6 +74,7 @@ void insertInCells(Word word, Cell* vector, int depth){
     inputCell->below = vector[i-1]->next;
   }
 }
+
 
 // Essa funçaõ recebe uma palavra e a insere na skip list
 bool lista_inserir(LISTA *lista, WORD *word){
@@ -139,12 +143,12 @@ void removeInCells(Cell* vector, int depth, Word word){
 
 // Essa função remove uma palavra da skip list
 Word lista_remover(LISTA *lista, char* title){
-  Word word = word_criar(title, NULL);
+  if (lista == NULL) return NULL;
+  else if(lista_cheia(lista)) return NULL;
+  
+  char tempVerbete[2] = "t";
+  Word word = word_criar(title, tempVerbete);  
 
-  if (lista == NULL || word == NULL) return false;
-  if(lista_cheia(lista)) return false;
-  
-  
   Cell currentCell = lista->vector[lista->depth-1];
   Cell nextCell = NULL;
 
@@ -167,7 +171,7 @@ Word lista_remover(LISTA *lista, char* title){
       continue;
     }
     
-    else if(word_compare(nextCell->value, word) > 0){
+    else if(word_compare(nextCell->value, word) >= 0){
       if(vectorIndex == 0){
         vector[vectorIndex] = currentCell;
         vectorIndex--;
@@ -193,8 +197,67 @@ Word lista_remover(LISTA *lista, char* title){
   }
   
   removeInCells(vector, lista->depth, word);
-  word_apagar(&word);
+  Word returnal = returnalCell->value;
 
+  free(returnalCell);
+  word_apagar(&word);
+  
+  return returnalCell->value;
+}
+
+// Essa função recebe um titulo, procura a palavra com o titulo dentro da skip list e o retorna
+Word lista_busca(LISTA *lista, char* title){
+  if (lista == NULL) return NULL;
+  else if(lista_cheia(lista)) return NULL;
+  
+  char tempVerbete[2] = "t";
+  Word word = word_criar(title, tempVerbete); 
+  
+  Cell currentCell = lista->vector[lista->depth-1];
+  Cell nextCell = NULL;
+
+  int vectorIndex = lista->depth-1;
+  
+  while(1){
+    nextCell = currentCell->next;
+    
+    if (nextCell == NULL && currentCell->below == NULL) {
+      vectorIndex--;
+      break;
+    }
+    
+    else if (nextCell == NULL) {
+      currentCell = currentCell->below;
+      vectorIndex--;
+      continue;
+    }
+    
+    else if(word_compare(nextCell->value, word) >= 0){
+      if(vectorIndex == 0){
+        vectorIndex--;
+        break;
+      }
+
+      currentCell = currentCell->below;
+      vectorIndex--;
+      continue;
+    }
+    currentCell = currentCell->next;
+  }
+
+  Cell returnalCell = currentCell->next;
+
+  if(returnalCell == NULL) {
+    word_apagar(&word);
+    return NULL;
+  }
+  if(word_compare(returnalCell->value, word) != 0) {
+    word_apagar(&word);
+    return NULL;
+  }
+  
+  word_apagar(&word);
+  
   return returnalCell->value;
 }
 
@@ -223,18 +286,76 @@ bool lista_cheia(SkipList lista){
 void lista_imprimir(SkipList lista){
   Cell iterCell = lista->vector[0]->next;
   for(; iterCell!=NULL; iterCell = iterCell->next)
-    printf("Palavra: %s Verbete: %s\n", word_get_title(iterCell->value), word_get_verbete(iterCell->value));
+    word_imprimir(iterCell->value);
+}
+
+void lista_imprimir_de_caracter(LISTA *lista, char c){
+  if (lista == NULL) return;
+  else if(lista_cheia(lista)) return;
+  
+  char title[2];
+  title[0] = c;
+  char tempVerbete[2] = "t";
+
+  Word word = word_criar(title, tempVerbete); 
+  
+  Cell currentCell = lista->vector[lista->depth-1];
+  Cell nextCell = NULL;
+
+  int vectorIndex = lista->depth-1;
+  
+  while(1){
+    nextCell = currentCell->next;
+    
+    if (nextCell == NULL && currentCell->below == NULL) {
+      vectorIndex--;
+      break;
+    }
+    
+    else if (nextCell == NULL) {
+      currentCell = currentCell->below;
+      vectorIndex--;
+      continue;
+    }
+    
+    else if(word_compare(nextCell->value, word) >= 0){
+      if(vectorIndex == 0){
+        vectorIndex--;
+        break;
+      }
+
+      currentCell = currentCell->below;
+      vectorIndex--;
+      continue;
+    }
+    currentCell = currentCell->next;
+  }
+
+  while(currentCell->next!=NULL){
+    currentCell = currentCell->next;
+    Word wordToPrint = currentCell->value;
+    if (word_get_title(wordToPrint)[0] == c)
+      word_imprimir(wordToPrint);
+    else break; 
+  }
+  
+
+  word_apagar(&word); 
+  return;
 }
 
 // Essa função apaga uma lista ligada
-void linkedListApagar(Cell head){
+void linkedListApagar(Cell head, int index){
   Cell lastCell = head;
   Cell currentCell = head;
 
   while(currentCell != NULL){
     lastCell = currentCell;
-    currentCell = currentCell->next ;
-    word_apagar(&(lastCell->value));
+    currentCell = currentCell->next;
+
+    if (lastCell->value != NULL && index == 0)
+      word_apagar(&(lastCell->value));
+    
     free(lastCell);
   }
 }
@@ -242,14 +363,14 @@ void linkedListApagar(Cell head){
 // Essa função apaga uma Skip List
 void lista_apagar(SkipList* lista){
   for(int i = 0; i < (*lista)->depth; i++)
-    linkedListApagar((*lista)->vector[i]);
+    linkedListApagar((*lista)->vector[i], i);
  
   free((*lista)->vector);
   free(*lista);
   *lista = NULL;
 }
 
-
+/*
 int main(void){
   int depth, n;
   scanf("%d %d", &depth, &n);
@@ -264,18 +385,12 @@ int main(void){
     Word word = word_criar(title, verbete);
 
     lista_inserir(lista, word);
-    
-    lista_imprimir(lista);
   }
-  
-  for(int i = 0; i < n; i++){
-    char title[40];
-    scanf(" %s", title);
 
-    lista_remover(lista, title);
-    lista_imprimir(lista);
-  }
+  printf("Will print all c\n");
+  lista_imprimir_de_caracter(lista, 'c');
 
   lista_apagar(&lista);
   return 0;
 }
+*/
