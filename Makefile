@@ -11,7 +11,7 @@ main:
 	gcc -c main.c -o main.o
 	 
 clean:
-	rm -f *.o *.out
+	rm -f *.o *.out *.zip
 
 run:
 	./dicionario.out
