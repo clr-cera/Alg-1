@@ -289,9 +289,9 @@ void lista_imprimir(SkipList lista){
     word_imprimir(iterCell->value);
 }
 
-void lista_imprimir_de_caracter(LISTA *lista, char c){
-  if (lista == NULL) return;
-  else if(lista_cheia(lista)) return;
+bool lista_imprimir_de_caracter(LISTA *lista, char c){
+  if (lista == NULL) return false;
+  else if(lista_cheia(lista)) return false;
   
   char title[2];
   title[0] = c;
@@ -331,6 +331,10 @@ void lista_imprimir_de_caracter(LISTA *lista, char c){
     currentCell = currentCell->next;
   }
 
+  if(currentCell->next == NULL) return false;
+  if (word_get_title(currentCell->next->value)[0] != c)
+    return false;
+  
   while(currentCell->next!=NULL){
     currentCell = currentCell->next;
     Word wordToPrint = currentCell->value;
@@ -341,7 +345,7 @@ void lista_imprimir_de_caracter(LISTA *lista, char c){
   
 
   word_apagar(&word); 
-  return;
+  return true;
 }
 
 // Essa função apaga uma lista ligada
