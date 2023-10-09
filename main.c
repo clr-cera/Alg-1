@@ -4,10 +4,6 @@
 #include "skipList.h"
 /*
 Issues da main:
-Na impressao, falta o filtro para printar só as palavras que começam com letra específica,
-creio que a implementação disso vai depender muito da implementação da lista,
-talvez exija modificações no lista.h para comportar essa função.
-
 O scanf("%s") é ruim para pegar termos com espaços, 
 estou usando verbetes sem espaços nos meus testes,
 mas deveremos decidir como tratar isso, podemos usar uma função tipo gets ou criar nossa própria,
@@ -30,15 +26,19 @@ void Alter(LISTA* lista){
   scanf(" %s", verbete);
 
   WORD* word = lista_remover(lista, title);
-  word_set_verbete(word, verbete);
-  lista_inserir(lista, word);
+  if (word == NULL) printf("OPERACAO INVALIDA\n");
+  else{
+    word_set_verbete(word, verbete);
+    lista_inserir(lista, word);
+  }
 }
-
 void Remove(LISTA* lista){
   char title[40];
   scanf(" %s", title);
 
   WORD* word = lista_remover(lista, title);
+
+  if (word == NULL) printf("OPERACAO INVALIDA\n");
   word_apagar(&word);
 }
 
@@ -47,7 +47,8 @@ void Search(LISTA* lista){
   scanf(" %s", title);
 
   WORD* word = lista_busca(lista, title);
-  word_imprimir_verbete(word);
+  if (word == NULL) printf("OPERACAO INVALIDA\n");
+  else word_imprimir_verbete(word);
 }
 
 void Print(LISTA* lista){

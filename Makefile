@@ -1,5 +1,6 @@
 all: word skipList main
 	gcc word.o skipList.o main.o -o dicionario.out -std=c99 -Wall
+	rm *.o
 
 word:
 	gcc -c word.c -o word.o
