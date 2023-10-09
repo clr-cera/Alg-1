@@ -16,7 +16,8 @@ void Insert(LISTA* lista){
   scanf(" %s", verbete);
 
   WORD* word = word_criar(title, verbete);
-  lista_inserir(lista, word);
+  if(lista_inserir(lista, word) == false)
+    printf("OPERACAO INVALIDA\n");
 }
 
 void Alter(LISTA* lista){

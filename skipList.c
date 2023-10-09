@@ -104,7 +104,7 @@ bool lista_inserir(LISTA *lista, WORD *word){
       continue;
     }
     
-    else if(word_compare(nextCell->value, word) > 0){
+    else if(word_compare(nextCell->value, word) >= 0){
       if(vectorIndex == 0){
         vector[vectorIndex] = currentCell;
         vectorIndex--;
@@ -119,7 +119,10 @@ bool lista_inserir(LISTA *lista, WORD *word){
     currentCell = currentCell->next;
   }
 
-  
+  if(currentCell->next != NULL)
+    if(word_compare(word, nextCell->value) == 0)
+      return false;
+
   insertInCells(word, vector, lista->depth);
   lista->length+=1;
   return true;
@@ -202,6 +205,7 @@ Word lista_remover(LISTA *lista, char* title){
   free(returnalCell);
   word_apagar(&word);
   
+  lista->length-=1;
   return returnalCell->value;
 }
 
