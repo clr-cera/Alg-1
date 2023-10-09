@@ -293,6 +293,7 @@ void lista_imprimir(SkipList lista){
     word_imprimir(iterCell->value);
 }
 
+// Essa função imprime todos os elementos da última lista que comeca com um caracter especifico
 bool lista_imprimir_de_caracter(LISTA *lista, char c){
   if (lista == NULL) return false;
   else if(lista_cheia(lista)) return false;
@@ -342,7 +343,7 @@ bool lista_imprimir_de_caracter(LISTA *lista, char c){
   while(currentCell->next!=NULL){
     currentCell = currentCell->next;
     Word wordToPrint = currentCell->value;
-    if (word_get_title(wordToPrint)[0] == c)
+    if (wordToPrint != word && word_get_title(wordToPrint)[0] == c)
       word_imprimir(wordToPrint);
     else break; 
   }

@@ -23,11 +23,10 @@ void Alter(LISTA* lista){
   verbete = readString();
 
   WORD* word = lista_remover(lista, title);
-  if (word == NULL) printf("OPERACAO INVALIDA\n");
-  else{
-    word_set_verbete(word, verbete);
-    lista_inserir(lista, word);
-  }
+  if (word == NULL) {printf("OPERACAO INVALIDA\n"); return;}
+  
+  word_set_verbete(word, verbete);
+  lista_inserir(lista, word);
 }
 void Remove(LISTA* lista){
   char title[40];
@@ -59,6 +58,7 @@ void Print(LISTA* lista){
 int main(void){
   char command[11];
   LISTA* dicionario = lista_criar(10);
+//  printf("Start\n"); // DEBUG
   while(1){
     scanf(" %s", command);
     if     (strcmp(command, "insercao") == 0)
@@ -75,6 +75,12 @@ int main(void){
 
     else if(strcmp(command, "impressao") == 0)
       Print(dicionario);
+    /*
+    else {
+      printf("No Command found\n");
+      free(readString());
+    }
+    */
   }
 }
 
