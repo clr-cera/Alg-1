@@ -301,13 +301,11 @@ void lista_imprimir(SkipList lista){
 bool lista_imprimir_de_caracter(LISTA *lista, char c){
   if (lista == NULL) return false;
   else if(lista_cheia(lista)) return false;
-  
+ 
   char title[2];
   title[0] = c;
-  char tempVerbete[2] = "t";
+  title[1] = '\0';
 
-  Word word = word_criar(title, tempVerbete); 
-  
   Cell currentCell = lista->vector[lista->depth-1];
   Cell nextCell = NULL;
 
@@ -327,7 +325,7 @@ bool lista_imprimir_de_caracter(LISTA *lista, char c){
       continue;
     }
     
-    else if(word_compare(nextCell->value, word) >= 0){
+    else if(strcmp(word_get_title(nextCell->value), title)>= 0){
       if(vectorIndex == 0){
         vectorIndex--;
         break;
@@ -347,13 +345,12 @@ bool lista_imprimir_de_caracter(LISTA *lista, char c){
   while(currentCell->next!=NULL){
     currentCell = currentCell->next;
     Word wordToPrint = currentCell->value;
-    if (wordToPrint != word && word_get_title(wordToPrint)[0] == c)
-      word_imprimir(wordToPrint);
+    
+    if (word_get_title(wordToPrint)[0] == c){
+      word_imprimir(wordToPrint); if(currentCell->next != NULL)word_imprimir(currentCell->next->value);}
     else break; 
   }
   
-
-  word_apagar(&word); 
   return true;
 }
 
