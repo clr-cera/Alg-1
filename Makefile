@@ -1,6 +1,6 @@
 all: word skipList main
 	gcc word.o skipList.o main.o -o dicionario.out -std=c99 -Wall
-	rm *.o
+	rm -f *.o
 
 word:
 	gcc -c word.c -o word.o
@@ -12,8 +12,10 @@ main:
 	gcc -c main.c -o main.o
 	 
 clean:
-	rm *.o *.out
+	rm -f *.o *.out
 
 run:
 	./dicionario.out
 
+zip:
+	zip dicionario.zip *.c *.h Makefile
