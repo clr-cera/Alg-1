@@ -213,10 +213,7 @@ Word lista_remover(LISTA *lista, char* title){
 Word lista_busca(LISTA *lista, char* title){
   if (lista == NULL) return NULL;
   else if(lista_cheia(lista)) return NULL;
-  
-  char tempVerbete[2] = "t";
-  Word word = word_criar(title, tempVerbete); 
-  
+   
   Cell currentCell = lista->vector[lista->depth-1];
   Cell nextCell = NULL;
 
@@ -236,7 +233,7 @@ Word lista_busca(LISTA *lista, char* title){
       continue;
     }
     
-    else if(word_compare(nextCell->value, word) >= 0){
+    else if(strcmp(word_get_title(nextCell->value), title)>= 0){
       if(vectorIndex == 0){
         vectorIndex--;
         break;
@@ -252,15 +249,12 @@ Word lista_busca(LISTA *lista, char* title){
   Cell returnalCell = currentCell->next;
 
   if(returnalCell == NULL) {
-    word_apagar(&word);
     return NULL;
   }
-  if(word_compare(returnalCell->value, word) != 0) {
-    word_apagar(&word);
+  else if(strcmp(word_get_title(nextCell->value), title)!= 0){
     return NULL;
   }
   
-  word_apagar(&word);
   
   return returnalCell->value;
 }
@@ -346,8 +340,8 @@ bool lista_imprimir_de_caracter(LISTA *lista, char c){
     currentCell = currentCell->next;
     Word wordToPrint = currentCell->value;
     
-    if (word_get_title(wordToPrint)[0] == c){
-      word_imprimir(wordToPrint); if(currentCell->next != NULL)word_imprimir(currentCell->next->value);}
+    if (word_get_title(wordToPrint)[0] == c)
+      word_imprimir(wordToPrint);
     else break; 
   }
   
