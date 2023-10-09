@@ -288,9 +288,13 @@ bool lista_cheia(SkipList lista){
 
 // Essa função imprime todos os elementos da última lista
 void lista_imprimir(SkipList lista){
-  Cell iterCell = lista->vector[0]->next;
-  for(; iterCell!=NULL; iterCell = iterCell->next)
-    word_imprimir(iterCell->value);
+  for(int i = lista->depth-1; i >=0; i--){
+    Cell iterCell = lista->vector[i]->next;
+    for(; iterCell!=NULL; iterCell = iterCell->next)
+      word_imprimir(iterCell->value);
+    
+    printf("\n");
+  }
 }
 
 // Essa função imprime todos os elementos da última lista que comeca com um caracter especifico

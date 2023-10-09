@@ -50,6 +50,9 @@ void Search(LISTA* lista){
 void Print(LISTA* lista){
   char c;
   scanf(" %c", &c);
+
+  lista_imprimir(lista); printf("VAI PRINTA OS DO CARACTER\n");
+
   if(lista_imprimir_de_caracter(lista, c) == false)
     printf("NAO HA PALAVRAS INICIADAS POR %c\n", c);
 }
