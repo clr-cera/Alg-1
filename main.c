@@ -45,7 +45,7 @@ void Search(LISTA* lista){
 
   WORD* word = lista_busca(lista, title);
   if (word == NULL) printf("OPERACAO INVALIDA\n");
-  else word_imprimir_verbete(word);
+  else word_imprimir(word);
 }
 
 void Print(LISTA* lista){
