@@ -2,18 +2,14 @@
 #include <string.h>
 #include "word.h"
 #include "skipList.h"
-/*
-Issues da main:
-O scanf("%s") é ruim para pegar termos com espaços, 
-estou usando verbetes sem espaços nos meus testes,
-mas deveremos decidir como tratar isso, podemos usar uma função tipo gets ou criar nossa própria,
-ou pegar uma das dezenas que fizemos no lab de ICC1.
-*/
+
+char* readString();
+
 void Insert(LISTA* lista){
   char title[40];
-  char verbete[140];
+  char* verbete;
   scanf(" %s", title);
-  scanf(" %s", verbete);
+  verbete = readString();
 
   WORD* word = word_criar(title, verbete);
   if(lista_inserir(lista, word) == false)
@@ -22,9 +18,9 @@ void Insert(LISTA* lista){
 
 void Alter(LISTA* lista){
   char title[40];
-  char verbete[140];
+  char* verbete;
   scanf(" %s", title);
-  scanf(" %s", verbete);
+  verbete = readString();
 
   WORD* word = lista_remover(lista, title);
   if (word == NULL) printf("OPERACAO INVALIDA\n");
@@ -80,4 +76,37 @@ int main(void){
     else if(strcmp(command, "impressao") == 0)
       Print(dicionario);
   }
+}
+
+char* readString(){
+  char input;
+  int length = 0;
+  char* string;
+  string = (char *) malloc(20 * sizeof(char));
+  int firstCharFlag = 1;
+
+  while (1){
+    input = getchar();
+    if (input == ' ' && firstCharFlag == 1){
+      firstCharFlag = 0;
+      continue;
+    }
+    firstCharFlag = 0;
+
+    if (input == '\n' || input == 13)
+      break;
+    
+    string[length] = input;
+    length++;
+
+    if (length % 20 == 0)
+      string = (char *) realloc(string, (length + 20) * sizeof(char));
+
+  }
+
+  string[length] = '\0';
+  //  length++;
+
+  //printf("Recebi a string!\n"); //DEBUG
+  return(string);
 }
