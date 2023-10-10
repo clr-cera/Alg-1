@@ -6,7 +6,7 @@
 char* readString();
 
 void Insert(LISTA* lista){
-  char title[41];
+  char title[50];
   char* verbete;
   scanf(" %s", title);
   verbete = readString();
@@ -17,7 +17,7 @@ void Insert(LISTA* lista){
 }
 
 void Alter(LISTA* lista){
-  char title[41];
+  char title[50];
   scanf(" %s", title);
 
   WORD* word = lista_remover(lista, title);
@@ -33,7 +33,7 @@ void Alter(LISTA* lista){
     printf("OPERACAO INVALIDA\n");
 }
 void Remove(LISTA* lista){
-  char title[41];
+  char title[50];
   scanf(" %s", title);
 
   WORD* word = lista_remover(lista, title);
@@ -43,7 +43,7 @@ void Remove(LISTA* lista){
 }
 
 void Search(LISTA* lista){
-  char title[41];
+  char title[50];
   scanf(" %s", title);
 
   WORD* word = lista_busca(lista, title);
