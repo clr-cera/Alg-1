@@ -131,13 +131,12 @@ bool lista_inserir(LISTA *lista, WORD *word){
 // Essa função recebe um vetor de células e remove a célula posterior caso exista
 void removeInCells(Cell* vector, int depth, Word word){
   for(int i = 0; i < depth; i++){
-    if(vector[i]->next != NULL)
+    if(vector[i]->next != NULL && vector[i]->next->value !=NULL)
       if(word_compare(vector[i]->next->value, word) == 0){
         Cell removedCell = vector[i]->next;
         vector[i]->next = removedCell->next;
         
         if(i != 0){
-          word_apagar(&(removedCell->value));
           free(removedCell);
         }
       }
@@ -206,7 +205,7 @@ Word lista_remover(LISTA *lista, char* title){
   word_apagar(&word);
   
   lista->length-=1;
-  return returnalCell->value;
+  return returnal;
 }
 
 // Essa função recebe um titulo, procura a palavra com o titulo dentro da skip list e o retorna
