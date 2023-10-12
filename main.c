@@ -6,20 +6,22 @@
 char* readString();
 
 void Insert(LISTA* lista){
-  char title[50];
+  char title[51];
   char* verbete;
   scanf(" %s", title);
   verbete = readString();
 
   WORD* word = word_criar(title, verbete);
-  if(lista_inserir(lista, word) == false)
+  if(lista_inserir(lista, word) == false){
     printf("OPERACAO INVALIDA\n");
+    word_apagar(&word);
+  }
   
   free(verbete);
 }
 
 void Alter(LISTA* lista){
-  char title[50];
+  char title[51];
   scanf(" %s", title);
 
   WORD* word = lista_busca(lista, title);
@@ -33,7 +35,7 @@ void Alter(LISTA* lista){
   free(verbete);
 }
 void Remove(LISTA* lista){
-  char title[50];
+  char title[51];
   scanf(" %s", title);
 
   WORD* word = lista_remover(lista, title);
@@ -43,7 +45,7 @@ void Remove(LISTA* lista){
 }
 
 void Search(LISTA* lista){
-  char title[50];
+  char title[51];
   scanf(" %s", title);
 
   WORD* word = lista_busca(lista, title);
@@ -82,7 +84,6 @@ int main(void){
     else if(strcmp(command, "impressao") == 0)
       Print(dicionario);
   }
-  
   lista_apagar(&dicionario);
   return 0;
 }
