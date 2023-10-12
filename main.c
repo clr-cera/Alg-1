@@ -95,7 +95,7 @@ char* readString(){
   int firstCharFlag = 1;
 
   while (1){
-    input = getchar();
+    if((input = getchar()) == EOF) break;
     if (input == ' ' && firstCharFlag == 1){
       continue;
     }

@@ -75,7 +75,6 @@ void insertInCells(Word word, Cell* vector, int depth){
   }
 }
 
-
 // Essa funçaõ recebe uma palavra e a insere na skip list
 bool lista_inserir(LISTA *lista, WORD *word){
   if (lista == NULL || word == NULL) return false;
