@@ -14,6 +14,8 @@ void Insert(LISTA* lista){
   WORD* word = word_criar(title, verbete);
   if(lista_inserir(lista, word) == false)
     printf("OPERACAO INVALIDA\n");
+  
+  free(verbete);
 }
 
 void Alter(LISTA* lista){
@@ -31,6 +33,8 @@ void Alter(LISTA* lista){
   word = word_criar(title, verbete);
   if(lista_inserir(lista, word) == false)
     printf("OPERACAO INVALIDA\n");
+
+  free(verbete);
 }
 void Remove(LISTA* lista){
   char title[50];
