@@ -22,7 +22,7 @@ void Alter(LISTA* lista){
 
   WORD* word = lista_remover(lista, title);
 
-  if (word == NULL) printf("OPERACAO INVALIDA\n");
+  if (word == NULL) {printf("OPERACAO INVALIDA\n"); return;}
   word_apagar(&word);
 
   char* verbete;
