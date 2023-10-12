@@ -1,3 +1,9 @@
+/*
+Feito por:
+Renan Parpinelli Scarpin    -  N USP 14712188
+Arthur Ernesto de Carvalho  -  N USP 14559479
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include "word.h"
