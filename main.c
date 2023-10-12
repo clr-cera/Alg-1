@@ -113,8 +113,5 @@ char* readString(){
   }
 
   string[length] = '\0';
-  //  length++;
-
-  //printf("Recebi a string!\n"); //DEBUG
   return(string);
 }

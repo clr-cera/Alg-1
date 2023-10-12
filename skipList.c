@@ -372,27 +372,3 @@ void lista_apagar(SkipList* lista){
   *lista = NULL;
 }
 
-/*
-int main(void){
-  int depth, n;
-  scanf("%d %d", &depth, &n);
-  SkipList lista = lista_criar(depth);
-  
-  for(int i = 0; i < n; i++){
-    char title[40];
-    char verbete[140];
-    scanf(" %s", title);
-    scanf(" %s", verbete);
-    
-    Word word = word_criar(title, verbete);
-
-    lista_inserir(lista, word);
-  }
-
-  printf("Will print all c\n");
-  lista_imprimir_de_caracter(lista, 'c');
-
-  lista_apagar(&lista);
-  return 0;
-}
-*/
