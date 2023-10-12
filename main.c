@@ -22,18 +22,14 @@ void Alter(LISTA* lista){
   char title[50];
   scanf(" %s", title);
 
-  WORD* word = lista_remover(lista, title);
-
-  if (word == NULL) {printf("OPERACAO INVALIDA\n"); return;}
-  word_apagar(&word);
-
+  WORD* word = lista_busca(lista, title);
+  
   char* verbete;
   verbete = readString();
+  
+  if (word == NULL) {printf("OPERACAO INVALIDA\n"); free(verbete); return;}
 
-  word = word_criar(title, verbete);
-  if(lista_inserir(lista, word) == false)
-    printf("OPERACAO INVALIDA\n");
-
+  word_set_verbete(word, verbete);
   free(verbete);
 }
 void Remove(LISTA* lista){
@@ -42,7 +38,7 @@ void Remove(LISTA* lista){
 
   WORD* word = lista_remover(lista, title);
 
-  if (word == NULL) printf("OPERACAO INVALIDA\n");
+  if (word == NULL) {printf("OPERACAO INVALIDA\n"); return;}
   word_apagar(&word);
 }
 
