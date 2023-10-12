@@ -65,8 +65,8 @@ int main(void){
   LISTA* dicionario = lista_criar(100);
   
   while(1){
-    scanf(" %s", command);
-    if(feof(stdin)) break;
+    if((scanf(" %s", command)) == EOF) break;
+    
     if     (strcmp(command, "insercao") == 0)
       Insert(dicionario);
 
@@ -81,12 +81,6 @@ int main(void){
 
     else if(strcmp(command, "impressao") == 0)
       Print(dicionario);
-    /*
-    else {
-      printf("No Command found\n");
-      free(readString());
-    }
-    */
   }
   
   lista_apagar(&dicionario);
