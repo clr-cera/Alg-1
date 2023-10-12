@@ -5,6 +5,7 @@
 
 char* readString();
 
+//Lê os dados necessários e cria e insere uma palavra na lista
 void Insert(LISTA* lista){
   char title[51];
   char* verbete;
@@ -20,6 +21,7 @@ void Insert(LISTA* lista){
   free(verbete);
 }
 
+//Lê os dados necessários e altera o verbete de uma palavra da lista
 void Alter(LISTA* lista){
   char title[51];
   scanf(" %s", title);
@@ -34,6 +36,8 @@ void Alter(LISTA* lista){
   word_set_verbete(word, verbete);
   free(verbete);
 }
+
+//Lê os dados necessários e remove uma palavra da lista
 void Remove(LISTA* lista){
   char title[51];
   scanf(" %s", title);
@@ -44,6 +48,7 @@ void Remove(LISTA* lista){
   word_apagar(&word);
 }
 
+//Lê os dados necessários e imprime o verbete de uma palavra já presente na lista
 void Search(LISTA* lista){
   char title[51];
   scanf(" %s", title);
@@ -53,6 +58,7 @@ void Search(LISTA* lista){
   else word_imprimir(word);
 }
 
+//Lê um caracter e imprime todas as palavras da lista que iniciam com tal caracter
 void Print(LISTA* lista){
   char c;
   scanf(" %c", &c);
@@ -61,7 +67,7 @@ void Print(LISTA* lista){
     printf("NAO HA PALAVRAS INICIADAS POR %c\n", c);
 }
 
-
+//Seleciona qual das funções acima serão executadas
 int main(void){
   char command[12];
   LISTA* dicionario = lista_criar(100);
@@ -88,6 +94,7 @@ int main(void){
   return 0;
 }
 
+//Função que lê uma string até encontrar o \n ou EOF, utilizada para receber os verbetes que contém o espaço
 char* readString(){
   char input;
   int length = 0;
