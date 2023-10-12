@@ -62,10 +62,11 @@ void Print(LISTA* lista){
 
 int main(void){
   char command[12];
-  LISTA* dicionario = lista_criar(10);
+  LISTA* dicionario = lista_criar(100);
 //  printf("Start\n"); // DEBUG
   while(1){
     scanf(" %s", command);
+    if(feof(stdin)) exit(0);
     if     (strcmp(command, "insercao") == 0)
       Insert(dicionario);
 
