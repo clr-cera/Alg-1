@@ -2,6 +2,7 @@
   #define BINARY_TREE_H
 
   #include <stdbool.h>
+  #include "../Queue/queue.h
 
   typedef struct biTree_* Tree;
   typedef struct cell_* Cell;

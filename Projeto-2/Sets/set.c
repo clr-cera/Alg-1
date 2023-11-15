@@ -1,4 +1,6 @@
 #include "set.h"
+#include "../BTAVL/avlBinaryTree.h"
+
 struct set{
 	AVL* tree;
 }
