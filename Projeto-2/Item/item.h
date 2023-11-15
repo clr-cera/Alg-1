@@ -4,6 +4,7 @@
 	#include <stdbool.h>
 
 	typedef struct item_ ITEM;
+	typedef struct item_* Item;
 
 	ITEM *item_criar(int chave);
 	bool item_apagar(ITEM **item);

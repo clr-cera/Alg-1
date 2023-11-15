@@ -55,3 +55,21 @@ int removeQueue(queue Queue){
   Queue->length -= 1;
   return output;
 }
+
+bool queue_empty(queue Queue){
+  if (Queue->length == 0) return true;
+  else return false;
+}
+
+void eraseQueue(queue Queue) {
+  cell current = Queue->begin;
+
+  while (current != NULL){
+    cell next = current->next;
+    free(current);
+    current = next;
+  }
+
+  free(Queue);
+}
+

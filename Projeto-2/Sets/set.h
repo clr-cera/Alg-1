@@ -1,11 +1,10 @@
 #ifndef _SET_H
 #define _SET_H
 
-  #include "ED.h" /*O TAD que será utilizado para armazenar os Dados do Set.
-  i.e, Set é um TAD que usa outro TAD (além do Item)*/
-  #include "item.h"
+#include "../Item/item.h"
  
  typedef struct set SET;
+ typedef struct SET* Set;
 
   SET *set_criar(void);
   bool set_pertence(SET *A, int elemento);

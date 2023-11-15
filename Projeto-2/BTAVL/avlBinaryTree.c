@@ -5,7 +5,7 @@
 #define ERROR -99999
 
 typedef struct cell_{
-  int value;
+  Item value;
   int balance;
   struct cell_* right;
   struct cell_* left;
@@ -23,7 +23,7 @@ int depthRec(Cell cell);
 void printCell(Cell cell);
 void changeCell(Cell cell, int new);
 
-int searchRec(Cell cell, int input);
+Item searchRec(Cell cell, int input);
 
 int insertRec(Cell* cell, int input);
 int insertInPlace(Cell* cell, int input);
@@ -35,6 +35,10 @@ int removeRec(Cell* cell, int input);
 int removeInPlace(Cell* cell);
 Cell removeRighteous(Cell* cell);
 
+void tree_to_queue_rec(Cell cell, queue Queue);
+
+void erase_tree_rec(Cell cell);
+
 int max(int a, int b){
   if (a >= b) return a;
   else return b;
@@ -43,7 +47,7 @@ int max(int a, int b){
 Cell createCell(int n) {
   Cell cell = (Cell) malloc(sizeof(cellObj));
   
-  cell->value = n;
+  cell->value = item_criar(n);
   cell->value = 0;
   cell->right = NULL;
   cell->left = NULL;
@@ -52,14 +56,18 @@ Cell createCell(int n) {
 }
 
 void printCell(Cell cell) {
-  printf("%d\n", cell->value);
+  printf("%d\n", item_get_chave(cell->value));
 }
 
 void changeCell(Cell cell, int new) {
-  cell->value = new;
+  if (cell->value != NULL)
+    free(cell->value);
+  cell->value = item_criar(new);
 }
 
 void removeCell(Cell* cell){
+  if ((*cell)->value != NULL)
+    free((*cell)->value);
   free(*cell);
   *cell = NULL;
 }
@@ -79,17 +87,17 @@ int depthRec(Cell cell) {
   return (max(leftDepth, rightDepth) + 1); 
 }
 
-int search_tree(Tree tree, int input) {
+Item search_tree(Tree tree, int input) {
   if (tree == NULL) return NULL;
   
   return searchRec(tree->root, input);
 }
 
-int searchRec(Cell cell, int input) {
-  if (cell == NULL) return -1;
-  if (cell->value == input) return cell->value;
+Item searchRec(Cell cell, int input) {
+  if (cell == NULL) return NULL;
+  if (item_get_chave(cell->value) == input) return cell->value;
 
-  if (input < cell->value)
+  if (input < item_get_chave(cell->value))
     return searchRec(cell->left, input);
 
   else 
@@ -100,14 +108,19 @@ bool insert_tree(Tree tree, int input) {
   if (tree == NULL) return false;
   if (tree->root == NULL) insertInPlace(&tree->root, input);
 
-  return insertRec(&tree->root, input);
+  if (insertRec(&tree->root, input) != ERROR)
+    return true;
+  else return false;
 }
 
 int insertRec(Cell* cell, int input) {
   int balance_below;
   Cell cellObj = *cell;
 
-  if (input < cellObj->value){
+  if (input == item_get_chave(cellObj->value)) 
+    return 0;
+
+  if (input < item_get_chave(cellObj->value)){
     if (cellObj->left == NULL) balance_below = insertInPlace(&cellObj->left, input);
     
     else balance_below = insertRec(&cellObj->left, input);
@@ -118,7 +131,7 @@ int insertRec(Cell* cell, int input) {
       cellObj->balance +=1;
   }
   
-  else if (input > cellObj->value){
+  else if (input > item_get_chave(cellObj->value)){
     if (cellObj->right == NULL) balance_below = insertInPlace(&cellObj->right, input);
   
     else balance_below = insertRec(&cellObj->right, input);
@@ -173,28 +186,53 @@ void rotateLeft(Cell* cell){
   cellObj->right = left_sub_tree;
 }
 
-int remove_tree(Tree tree, int input) {
+bool remove_tree(Tree tree, int input) {
   if (tree == NULL) return NULL;
   
-  return removeRec(&tree->root, input);
+  if (removeRec(&tree->root, input) != ERROR)
+    return true;
+
+  else return false;
 }
 
 int removeRec(Cell* cell, int input) {
-  if (*cell == NULL) return -1;
+  int balance_below;
+  Cell cellObj = *cell;
 
-  if ((*cell)->value == input)
+  if (*cell == NULL) return ERROR;
+
+  if (item_get_chave((*cell)->value) == input)
     return removeInPlace(cell);
 
-  if (input < (*cell)->value)
-    return removeRec(&(*cell)->left, input);
+  if (input < item_get_chave((*cell)->value)){
+    balance_below = removeRec(&(*cell)->left, input);
+     
+    if (balance_below != 0 || balance_below == ERROR)
+      return balance_below;
+    else
+      cellObj->balance -=1; 
+
+  }
   
-  else
-    return removeRec(&(*cell)->right, input);
+  else {
+    balance_below = removeRec(&(*cell)->right, input);
+    
+    if (balance_below != 0 || balance_below == ERROR)
+      return balance_below;
+    else
+      cellObj->balance +=1; 
+  }
+
+  if (cellObj->balance == 2)
+    rotateRight(cell);
+  if (cellObj->balance == -2)
+    rotateLeft(cell);
+  
+  return cellObj->balance;
 }
 
 int removeInPlace(Cell* cell) {
   Cell oldCell = *cell;
-  int returnal = oldCell->value;
 
   if (oldCell->right == NULL)
     *cell = oldCell->left;
@@ -206,7 +244,8 @@ int removeInPlace(Cell* cell) {
     *cell = removeRighteous(&oldCell->left);
 
   removeCell(&oldCell);
-  return returnal;
+
+  return 1;
 }
 
 Cell removeRighteous(Cell* cell){
@@ -218,3 +257,36 @@ Cell removeRighteous(Cell* cell){
   *cell = currentCell->left; 
   return currentCell;
 }
+
+queue tree_to_queue(Tree tree) {
+  if (tree == NULL) return NULL;
+
+  queue Queue = createQueue();
+  tree_to_queue_rec(tree->root, Queue);
+  return Queue;
+}
+
+void tree_to_queue_rec(Cell cell, queue Queue){
+  if (cell == NULL) return;
+
+  tree_to_queue_rec(cell->left, Queue);
+
+  insertQueue(Queue, item_get_chave(cell->value));
+
+  tree_to_queue_rec(cell->right, Queue);
+}
+
+void erase_tree(Tree tree) {
+  if (tree == NULL) return;
+  erase_tree_rec(tree->root);
+}
+
+void erase_tree_rec(Cell cell) {
+  if (cell == NULL) return;
+
+  erase_tree_rec(cell->left);
+  erase_tree_rec(cell->right);
+
+  removeCell(&cell);
+}
+
