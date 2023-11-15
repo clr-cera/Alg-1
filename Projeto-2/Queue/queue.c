@@ -51,6 +51,7 @@ int removeQueue(queue Queue){
 
   Queue->begin = Queue->begin->next;
   free(lastBegin);
-
+  
+  Queue->length -= 1;
   return output;
 }
