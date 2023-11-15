@@ -63,20 +63,15 @@ SET *set_interseccao(SET *A, SET *B){
 	int rm1 = removeQueue(queue_A);
 	int rm2 = removeQueue(queue_B);
 
-	while(!queue_empty(queue_A) && !queue_empty(queue_B)){
-		if(!queue_empty(queue_A)){
-			
-      if(rm1 > rm2)
-				rm2 = removeQueue(queue_B);
-			
-      else if(rm1 < rm2)
-				rm1 = removeQueue(queue_A);
-			
-      else {
-				set_inserir(interseccao, rm1);
-				rm1 = removeQueue(queue_A);
-				rm2 = removeQueue(queue_B);
-			}
+	while(!queue_empty(queue_A) || !queue_empty(queue_B)){	
+      	if(rm1 > rm2)
+			rm2 = removeQueue(queue_B);
+      	else if(rm1 < rm2)
+			rm1 = removeQueue(queue_A);
+      	else {
+			set_inserir(interseccao, rm1);
+			rm1 = removeQueue(queue_A);
+			rm2 = removeQueue(queue_B);
 		}
 	}
   

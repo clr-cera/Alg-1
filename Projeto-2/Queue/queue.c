@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
+#include "queue.h"
 // Essa é a struct célula que comporá a fila, a qual armazena um valor e aponta para outra célula
 typedef struct cell_{
   int value;
@@ -48,8 +48,17 @@ void insertQueue(queue Queue, int value){
   Queue->length += 1;
 }
 
+// Essa função retorna true se a fila estiver vazia e false caso contrário
+bool queue_empty(queue Queue){
+  if (Queue->length == 0)
+  return true;
+  else return false;
+}
+
 // Essa função remove e retorna o primeiro valor de uma fila
 int removeQueue(queue Queue){
+  if(queue_empty(Queue))
+    return -1;
   int output = Queue->begin->value;
   cell lastBegin = Queue->begin;
 
@@ -58,12 +67,6 @@ int removeQueue(queue Queue){
   
   Queue->length -= 1;
   return output;
-}
-
-// Essa função retorna true se a fila estiver vazia e false caso contrário
-bool queue_empty(queue Queue){
-  if (Queue->length == 0) return true;
-  else return false;
 }
 
 // Essa função apaga uma fila da memória
