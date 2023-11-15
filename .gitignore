@@ -4,6 +4,8 @@
 *.zip
 # Prerequisites
 *.d
+# Valgrind
+vgcore.*
 
 # Object files
 *.o
