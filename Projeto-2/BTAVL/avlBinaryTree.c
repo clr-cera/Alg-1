@@ -317,6 +317,7 @@ void tree_to_queue_rec(Cell cell, queue Queue){
 void erase_tree(Tree tree) {
   if (tree == NULL) return;
   erase_tree_rec(tree->root);
+  free(tree);
 }
 
 void erase_tree_rec(Cell cell) {
