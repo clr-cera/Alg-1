@@ -41,10 +41,11 @@ SET *set_uniao(SET *A, SET *B){
 	QUEUE* queue_B = tree_to_queue(B->tree);
 	SET* uniao = set_criar();
 
-	while(!queue_empty(queue_A) && !queue_empty(queue_B)){ 
-		set_inserir(uniao, removeQueue(queue_A));
-    	
-		set_inserir(uniao, removeQueue(queue_B));
+	while(!queue_empty(queue_A) || !queue_empty(queue_B)){ 
+		if (!queue_empty(queue_A))
+      set_inserir(uniao, removeQueue(queue_A));
+    if (!queue_empty(queue_B))
+  		set_inserir(uniao, removeQueue(queue_B));
 	}
   
   eraseQueue(queue_A);

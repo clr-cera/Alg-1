@@ -60,7 +60,6 @@ Cell createCell(int n) {
   Cell cell = (Cell) malloc(sizeof(cellObj));
   
   cell->value = item_criar(n);
-  cell->value = 0;
   cell->right = NULL;
   cell->left = NULL;
   
@@ -306,6 +305,7 @@ void print_tree(Tree tree) {
   if (tree == NULL) return;
 
   print_tree_rec(tree->root);
+  printf("\n");
 }
 
 void print_tree_rec(Cell cell) {
@@ -313,7 +313,7 @@ void print_tree_rec(Cell cell) {
 
   print_tree_rec(cell->left);
 
-  printf("%d ", item_get_chave(cell->value));
+  printf("%d, ", item_get_chave(cell->value));
 
   print_tree_rec(cell->right);
 }

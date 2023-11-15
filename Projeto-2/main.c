@@ -15,15 +15,23 @@ int main(int argc, char *argv[])
 
   for(int i=0; i<n_a; i++){
     scanf("%d",&x);
+    //printf("will insert %d.\n", x); // DEBUG
     set_inserir(A, x);
 
   }
+  printf("Stop inserting in A\n");
 
   for(int i=0; i<n_b; i++){
     scanf("%d",&x);
+    //printf("will insert %d.\n", x); // DEBUG
     set_inserir(B, x);
 
   }
+  printf("Stop inserting in B\n"); // DEBUG
+
+  printf("Set A: "); set_imprimir(A); // DEBUG
+  printf("Set B: "); set_imprimir(B); // DEBUG
+
 
   scanf("%d", &op);
 
