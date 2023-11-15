@@ -14,11 +14,12 @@ typedef cellObj* Cell;
 
 typedef struct biTree_ {
   Cell root;
-  int depth;
 }biTreeObj;
 typedef biTreeObj* Tree;
 
 int depthRec(Cell cell);
+
+Tree create_tree();
 
 void printCell(Cell cell);
 void changeCell(Cell cell, int new);
@@ -39,10 +40,21 @@ void tree_to_queue_rec(Cell cell, queue Queue);
 
 void erase_tree_rec(Cell cell);
 
+void print_tree_rec(Cell cell);
+
 int max(int a, int b){
   if (a >= b) return a;
   else return b;
 }
+
+Tree create_tree() {
+  Tree tree = (Tree) malloc(sizeof(biTreeObj));
+  
+  tree->root = NULL;
+  
+  return tree;
+}
+
 
 Cell createCell(int n) {
   Cell cell = (Cell) malloc(sizeof(cellObj));
@@ -106,7 +118,7 @@ Item searchRec(Cell cell, int input) {
 
 bool insert_tree(Tree tree, int input) {
   if (tree == NULL) return false;
-  if (tree->root == NULL) insertInPlace(&tree->root, input);
+  if (tree->root == NULL) {insertInPlace(&tree->root, input); return true;}
 
   if (insertRec(&tree->root, input) != ERROR)
     return true;
@@ -290,3 +302,18 @@ void erase_tree_rec(Cell cell) {
   removeCell(&cell);
 }
 
+void print_tree(Tree tree) {
+  if (tree == NULL) return;
+
+  print_tree_rec(tree->root);
+}
+
+void print_tree_rec(Cell cell) {
+  if (cell == NULL) return;
+
+  print_tree_rec(cell->left);
+
+  printf("%d ", item_get_chave(cell->value));
+
+  print_tree_rec(cell->right);
+}
