@@ -60,6 +60,7 @@ Cell createCell(int n) {
   Cell cell = (Cell) malloc(sizeof(cellObj));
   
   cell->value = item_criar(n);
+  cell->balance = 0;
   cell->right = NULL;
   cell->left = NULL;
   
@@ -172,8 +173,19 @@ void rotateRight(Cell* cell){
   if (cellObj == NULL) return;
   if (cellObj->left == NULL) return;
 
-  if (cellObj->left->balance == -1)
+  bool isSimple = true;
+
+  if (cellObj->left->balance == -1){
     rotateLeft(&cellObj->left);
+    isSimple = false;
+  }
+
+  if (isSimple) 
+    cellObj->balance = 0;
+  else 
+    cellObj->balance = -1;
+    
+  cellObj->right->balance = 0;
 
   Cell right_sub_tree = cellObj->left->right;
 
@@ -187,9 +199,21 @@ void rotateLeft(Cell* cell){
   if (cellObj == NULL) return;
   if (cellObj->right == NULL) return;
   
-  if (cellObj->right->balance == 1)
-    rotateRight(&cellObj->right);
+  bool isSimple = true;
 
+  if (cellObj->right->balance == 1){
+    rotateRight(&cellObj->right);
+    isSimple = false;
+  }
+
+  
+  if (isSimple) 
+    cellObj->balance = 0;
+  else 
+    cellObj->balance = 1;
+    
+  cellObj->right->balance = 0;
+  
   Cell left_sub_tree = cellObj->right->left;
 
   cellObj->right->left = cellObj;
@@ -253,6 +277,9 @@ int removeInPlace(Cell* cell) {
   
   else 
     *cell = removeRighteous(&oldCell->left);
+  
+  (*cell)->right = oldCell->right;
+  (*cell)->left = oldCell->left;
 
   removeCell(&oldCell);
 
