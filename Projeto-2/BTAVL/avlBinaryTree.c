@@ -185,7 +185,7 @@ void rotateRight(Cell* cell){
   else 
     cellObj->balance = -1;
     
-  cellObj->right->balance = 0;
+  cellObj->left->balance = 0;
 
   Cell right_sub_tree = cellObj->left->right;
 
