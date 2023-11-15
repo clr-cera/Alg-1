@@ -15,7 +15,9 @@ SET *set_criar(void){
 }
 
 bool set_pertence(SET *A, int elemento){
-	return search_tree(A->tree, elemento);
+  if(search_tree(A->tree, elemento) != NULL) return true;
+  
+  else return false;
 }
 
 bool set_inserir (SET *s, int elemento){

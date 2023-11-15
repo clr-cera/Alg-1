@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+// Essa é a struct célula que comporá a fila, a qual armazena um valor e aponta para outra célula
 typedef struct cell_{
   int value;
   struct cell_* next;
@@ -9,6 +10,7 @@ typedef struct cell_{
 
 typedef cellObj* cell; 
 
+// Essa é a struct fila, ela armazena seu tamanho, a célula no início e a no fim
 typedef struct queue_{
   int length;
   cell begin;
@@ -17,7 +19,7 @@ typedef struct queue_{
 
 typedef queueObj* queue;
 
-
+// Essa função cria uma fila
 queue createQueue(){
   queue result = (queue) malloc(sizeof(queueObj));
   
@@ -28,6 +30,7 @@ queue createQueue(){
   return result;
 }
 
+// Essa função insere um valor inteiro na ultima posição de uma fila
 void insertQueue(queue Queue, int value){
   if(Queue->length == 0){ 
     Queue->end = (cell) malloc(sizeof(cellObj));
@@ -45,6 +48,7 @@ void insertQueue(queue Queue, int value){
   Queue->length += 1;
 }
 
+// Essa função remove e retorna o primeiro valor de uma fila
 int removeQueue(queue Queue){
   int output = Queue->begin->value;
   cell lastBegin = Queue->begin;
@@ -56,11 +60,13 @@ int removeQueue(queue Queue){
   return output;
 }
 
+// Essa função retorna true se a fila estiver vazia e false caso contrário
 bool queue_empty(queue Queue){
   if (Queue->length == 0) return true;
   else return false;
 }
 
+// Essa função apaga uma fila da memória
 void eraseQueue(queue Queue) {
   cell current = Queue->begin;
 
