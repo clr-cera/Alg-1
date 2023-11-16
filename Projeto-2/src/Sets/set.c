@@ -44,13 +44,46 @@ SET *set_uniao(SET *A, SET *B){
 	QUEUE* queue_A = tree_to_queue(A->tree);
 	QUEUE* queue_B = tree_to_queue(B->tree);
 	SET* uniao = set_criar();
-	//Todos os itens das filas são inseridos no set união
+	//Os inteiros it1 e it2 são inicializados com o primeiro elemento das filas, pois serão comparados em breve e, portanto, não podem estar com lixo em sua posição de memória
+	int it1 = removeQueue(queue_A);
+	int it2 = removeQueue(queue_B);
+	/*
+	Como a AVL não aceita itens repetidos, poderia simplesmente inserir todos os itens do set A e B no set união.
+	Entretanto, mesmo na inserção de elementos repetidos, a inserção na AVL é uma operação custosa de complexidade O(log(n)).
+	Logo, na sequencia de verificações abaixo, a ordem da inserção no set C é manipulado para que elementos que pertençam a ambos os sets A e B sejam comparados na mesma iteração do loop, dessa forma os elementos iguais são identificados e apenas um deles é inserido no set C, economizando uma operação de inserção desnecessária.
+	Para isso, várias comparações e testes são feitas, porém há ganho de tempo, principalmente para operações de união entre sets de muitos elementos presentes em ambos.
+	*/
+	while(true){	
+		
+	    if(it1 > it2 || queue_empty(queue_A)){
+	      	set_inserir(uniao, it2);
+	      	if(queue_empty(queue_A) && queue_empty(queue_B)) break;
+			it2 = removeQueue(queue_B);
+	    }
+	    
+	    else if(it1 < it2 || queue_empty(queue_B)){
+	    	set_inserir(uniao, it1);
+	    	if(queue_empty(queue_A) && queue_empty(queue_B)) break;
+			it1 = removeQueue(queue_A);
+	    }
+	    
+	    else {
+			set_inserir(uniao, it1);
+			if(queue_empty(queue_A) && queue_empty(queue_B)) break;
+			it1 = removeQueue(queue_A);
+			it2 = removeQueue(queue_B);
+		}
+	}
+	/*
+	Algoritmo não otimizado onde todos os elementos de A e B são inseridos no set união. 
+	Os elementos repetidos são descardados durante a inserção na AVL, com o mesmo custo da inserção de um elemento único
 	while(!queue_empty(queue_A) || !queue_empty(queue_B)){ 
 		if (!queue_empty(queue_A))
         set_inserir(uniao, removeQueue(queue_A));
     	if (!queue_empty(queue_B))
   		set_inserir(uniao, removeQueue(queue_B));
-	}
+	}*/
+	
   //a fila é apagada para liberar memória
   eraseQueue(queue_A);
   eraseQueue(queue_B);
