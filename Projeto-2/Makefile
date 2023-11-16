@@ -3,19 +3,19 @@ all: queue item tree sets main
 	rm -f *.o
 
 main:
-	gcc -c -g main.c -o main.o -std=c99
+	gcc -c -g ./src/main.c -o main.o -std=c99
 	 
 tree:
-	gcc -c -g ./BTAVL/avlBinaryTree.c -o tree.o -std=c99
+	gcc -c -g ./src/BTAVL/avlBinaryTree.c -o tree.o -std=c99
 
 item:
-	gcc -c -g ./Item/item.c -o item.o -std=c99
+	gcc -c -g ./src/Item/item.c -o item.o -std=c99
 
 queue:
-	gcc -c -g ./Queue/queue.c -o queue.o -std=c99
+	gcc -c -g ./src/Queue/queue.c -o queue.o -std=c99
 
 sets:
-	gcc -c -g ./Sets/set.c -o sets.o -std=c99
+	gcc -c -g ./src/Sets/set.c -o sets.o -std=c99
 
 clean:
 	rm -f *.o *.out *.zip
