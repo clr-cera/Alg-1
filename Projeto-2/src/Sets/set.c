@@ -47,7 +47,7 @@ SET *set_uniao(SET *A, SET *B){
 	//Todos os itens das filas são inseridos no set união
 	while(!queue_empty(queue_A) || !queue_empty(queue_B)){ 
 		if (!queue_empty(queue_A))
-      set_inserir(uniao, removeQueue(queue_A));
+        set_inserir(uniao, removeQueue(queue_A));
     	if (!queue_empty(queue_B))
   		set_inserir(uniao, removeQueue(queue_B));
 	}
@@ -63,27 +63,27 @@ SET *set_interseccao(SET *A, SET *B){
 	QUEUE* queue_A = tree_to_queue(A->tree);
 	QUEUE* queue_B = tree_to_queue(B->tree);
 	SET* interseccao = set_criar();
-	//Os inteiros rm1 e rm2 são inicializados com o primeiro elemento das filas, pois serão comparados em breve e, portanto, não podem estar com lixo em sua posição de memória
-	int rm1 = removeQueue(queue_A);
-	int rm2 = removeQueue(queue_B);
+	//Os inteiros it1 e it2 são inicializados com o primeiro elemento das filas, pois serão comparados em breve e, portanto, não podem estar com lixo em sua posição de memória
+	int it1 = removeQueue(queue_A);
+	int it2 = removeQueue(queue_B);
 	//O loop while(true) define uma maior flexibilidade na definição do momento onde a condição de parada é definida, garantindo que todos os itens das filas sejam analizados, mesmo o último.
 	while(true){	
-	//Caso rm1 > rm2, rm2 não pertence a intersecção e, portanto, pode ser descartado sendo substituido pelo próximo item da fila B
-    if(rm1 > rm2){
+	//Caso it1 > it2, it2 não pertence a intersecção e, portanto, pode ser descartado sendo substituido pelo próximo item da fila B
+    if(it1 > it2){
       	if (queue_empty(queue_B)) break;
-		rm2 = removeQueue(queue_B);
+		it2 = removeQueue(queue_B);
     }
-    //Caso rm1 < rm2, rm1 não pertence a intersecção e, portanto, pode ser descartado sendo substituido pelo próximo item da fila A
-    else if(rm1 < rm2){
+    //Caso it1 < it2, it1 não pertence a intersecção e, portanto, pode ser descartado sendo substituido pelo próximo item da fila A
+    else if(it1 < it2){
       	if (queue_empty(queue_A)) break;
-		rm1 = removeQueue(queue_A);
+		it1 = removeQueue(queue_A);
     }
-    //Caso rm1 == rm2, ambos pertencem a intersecção, porém apenas um precisa ser inserido, pois o outro é igual. Assim, após a inserção ambos são substituidos pelos próximos itens das filas.
+    //Caso it1 == it2, ambos pertencem a intersecção, porém apenas um precisa ser inserido, pois o outro é igual. Assim, após a inserção ambos são substituidos pelos próximos itens das filas.
     else {
-		set_inserir(interseccao, rm1);
+		set_inserir(interseccao, it1);
       	if (queue_empty(queue_A) || queue_empty(queue_B)) break;
-		rm1 = removeQueue(queue_A);
-		rm2 = removeQueue(queue_B);
+		it1 = removeQueue(queue_A);
+		it2 = removeQueue(queue_B);
 		}
 	}
   //as filas são apagadas para liberação de memória
