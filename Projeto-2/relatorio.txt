@@ -1,0 +1,20 @@
+A estrutura de dados principal escolhida é a Árvore AVL, com a fila sendo também utilizada como estrutura auxiliar em algumas operações específicas. A Árvore AVL foi escolhida pela rapidez de sua operação de busca e pela fácil extração ordenada dos elementos.
+
+
+Operações Básicas
+A operação criar o conjunto é O(1), pois é criada apenas uma AVL vazia.
+
+A operação apagar um conjunto é O(n), pois cada elemento deve ser apagado também. Entretanto, como essa operação é chamada apenas uma vez por set, seu impacto é baixo.
+
+A operação inserir um elemento em um conjunto é O(log(n)), pois, apesar da inserção em si possuir um custo computacional constante, antes de inserir é necessário buscar a posição ideal para inserir o elemento, portanto o custo é log(n), o custo da busca na árvore AVL é log(n) pois são feitas rotações durante as operações de inserção e remoção para garantir que ela sempre esteja balanceada.
+
+A operação remover um elemento do conjunto é O(log(n)), pois, apesar da remoção em si possuir um custo computacional constante, antes de remover é necessário buscar o elemento pela chave de remoção necessária, portanto o custo é log(n), o custo da busca na árvore AVL é log(n) pois são feitas rotações durante as operações de inserção e remoção para garantir que ela sempre esteja balanceada.
+
+A operação de imprimir todos os elementos do conjunto é O(n), pois é necessário repetir a impressão para cada um dos elementos. Importante destacar que a impressão ordenada dos elementos não necessita de um algoritmo de ordenação, pois o percurso em ordem na árvore já percorre os elementos de forma ordenada. 
+
+Operações Específicas
+A operação pertence consiste apenas em uma busca, o que torna a Árvore AVL muito vantajosa, pois sua busca tem complexidade O(log(n)). 
+
+A operação união percorre ambos os conjuntos no percurso em ordem e adiciona seus elementos em duas filas. Então os elementos de ambas as filas são consumidos em sincronia e comparados entre si, sendo crescentemente inseridos em uma terceira árvore AVL e, evitando a inserção desnecessária de elementos inseridos anteriormente. A extração e comparação da união é O(n), porém como cada elemento deve ser inserido na terceira árvore e a inserção custa O(log(n)), o custo da função fica O(n*log(n)).
+
+A operação intersecção também percorre ambos os conjuntos no percurso em ordem e adiciona seus elementos em duas filas. Então os elementos de ambas as filas são consumidos em sincronia e comparados entre si, sendo inseridos em uma terceira árvore AVL apenas os elementos em comum. A extração e comparação dos elementos é O(n), porém como cada elemento deve ser inserido na terceira árvore e a inserção custa O(log(n)), o custo da função fica O(n*log(n)).
