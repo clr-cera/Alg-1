@@ -1,6 +1,9 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "avlBinaryTree.h"
+#define DISTANCE 5
+
+
 
 // Esta é uma flag que é usada para saber se houve problema na inserção ou remoção 
 // ao passar o balanço através da volta da recursão
@@ -46,6 +49,8 @@ void tree_to_queue_rec(Cell cell, queue Queue);
 void erase_tree_rec(Cell cell);
 
 void print_tree_rec(Cell cell);
+
+void print_tree_pretty_rec(Cell cell, int position);
 
 // Essa função retorna o maior valor entre dois inteiros
 int max(int a, int b){
@@ -395,3 +400,28 @@ void print_tree_rec(Cell cell) {
 
   print_tree_rec(cell->right);
 }
+
+void print_tree_pretty(Tree tree) {
+  if (tree == NULL) return;
+  printf("\n");
+  
+  print_tree_pretty_rec(tree->root, 0);
+
+  printf("\n");
+}
+
+void print_tree_pretty_rec(Cell cell, int position) {
+  if (cell == NULL) {
+    printf("\n");
+    return;
+  }
+  
+  print_tree_pretty_rec(cell->right, position+1);
+  
+  for (int i = 0; i < position * DISTANCE; i++)
+    printf(" ");
+  printf("%d\n", item_get_chave(cell->value));
+
+  print_tree_pretty_rec(cell->left, position+1);
+}
+

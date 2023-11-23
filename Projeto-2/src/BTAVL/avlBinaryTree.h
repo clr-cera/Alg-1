@@ -18,6 +18,7 @@
   bool remove_tree(Tree tree, int input);
 
   void print_tree(Tree tree);
+  void print_tree_pretty(Tree tree);
   queue tree_to_queue(Tree tree);
 
   int depth(Tree tree);

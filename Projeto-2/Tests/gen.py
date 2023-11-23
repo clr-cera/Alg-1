@@ -3,8 +3,8 @@ from random import shuffle
 f1 = open("data1.in", "w")
 f2 = open("data2.in", "w")
 
-numbers1 = [*range(5000, 15000)]
-numbers2 = [*range(10000)]
+numbers1 = [*range(10, 30)]
+numbers2 = [*range(20)]
 
 shuffle(numbers1)
 shuffle(numbers2)

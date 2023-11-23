@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     set_inserir(A, x);
 
   }
-  printf("Stop inserting in A\n");
+  //printf("Stop inserting in A\n");
 
   for(int i=0; i<n_b; i++){
     scanf("%d",&x);
@@ -27,10 +27,10 @@ int main(int argc, char *argv[])
     set_inserir(B, x);
 
   }
-  printf("Stop inserting in B\n"); // DEBUG
+  //printf("Stop inserting in B\n"); // DEBUG
 
-  printf("Set A: "); set_imprimir(A); // DEBUG
-  printf("Set B: "); set_imprimir(B); // DEBUG
+  //printf("Set A: "); set_imprimir(A); // DEBUG
+  //printf("Set B: "); set_imprimir(B); // DEBUG
 
 
   scanf("%d", &op);

@@ -24,4 +24,4 @@ run:
 	./sets.out
 
 zip:
-	zip -R gerente.zip . '*.c' '*.h' '*.in' 'Makefile'
+	zip -R sets.zip . '*.c' '*.h' '*.in' 'Makefile'
