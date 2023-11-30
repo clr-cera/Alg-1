@@ -25,3 +25,6 @@ run:
 
 zip:
 	zip -R sets.zip . '*.c' '*.h' '*.in' 'Makefile'
+
+zip-all:
+	zip -R sets.zip . '*'

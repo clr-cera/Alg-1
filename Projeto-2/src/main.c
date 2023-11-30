@@ -1,3 +1,9 @@
+/*
+Feito por:
+Renan Parpinelli Scarpin    -  N USP 14712188
+Arthur Ernesto de Carvalho  -  N USP 14559479
+*/
+
 #include "./Sets/set.h"
 #include <stdio.h>
 #include <stdlib.h>

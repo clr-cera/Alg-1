@@ -1,3 +1,9 @@
+/*
+Feito por:
+Renan Parpinelli Scarpin    -  N USP 14712188
+Arthur Ernesto de Carvalho  -  N USP 14559479
+*/
+
 A estrutura de dados principal escolhida é a Árvore AVL, com a fila sendo também utilizada como estrutura auxiliar em algumas operações específicas. A Árvore AVL foi escolhida pela rapidez de sua operação de busca e pela fácil extração ordenada dos elementos.
 
 
